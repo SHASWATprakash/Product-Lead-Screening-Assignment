@@ -45,6 +45,17 @@ describe("session safety", () => {
     expect(onUnauthorized).not.toHaveBeenCalled();
   });
 
+  it("preserves the API detail for a forbidden mutation without ending the session", async () => {
+    const onUnauthorized = vi.fn();
+    session.set("viewer-token");
+    setUnauthorizedHandler(onUnauthorized);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({ detail: "Role 'viewer' is missing permission 'screenings:run'" }), { status: 403 })));
+
+    await expect(api.generate("prd_trail_bar", "retry-key")).rejects.toMatchObject({ status: 403, detail: "Role 'viewer' is missing permission 'screenings:run'" });
+    expect(session.get()).toBe("viewer-token");
+    expect(onUnauthorized).not.toHaveBeenCalled();
+  });
+
   it("preserves aborts so abandoned routes do not become application errors", async () => {
     const controller = new AbortController();
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new DOMException("The operation was aborted", "AbortError")));
@@ -55,13 +66,50 @@ describe("session safety", () => {
 });
 
 describe("screening idempotency", () => {
-  afterEach(() => sessionStorage.clear());
+  afterEach(() => {
+    sessionStorage.clear();
+    session.clear();
+    vi.unstubAllGlobals();
+  });
 
   it("reuses a key for a retry within the same tenant and product only", () => {
     const initial = screeningKeys.getOrCreate("tnt_northwind", "prd_trail_bar");
     expect(screeningKeys.getOrCreate("tnt_northwind", "prd_trail_bar")).toBe(initial);
     expect(screeningKeys.getOrCreate("tnt_harbor", "prd_trail_bar")).not.toBe(initial);
     expect(screeningKeys.getOrCreate("tnt_northwind", "prd_granola")).not.toBe(initial);
+  });
+
+  it("sends the unchanged retry key with every generate request", async () => {
+    session.set("maya-token");
+    vi.stubGlobal("fetch", vi.fn().mockImplementation(() => Promise.resolve(new Response(JSON.stringify({ run_id: "run_once", status: "queued" }), { status: 202 }))));
+
+    await api.generate("prd_trail_bar", "same-request-key");
+    await api.generate("prd_trail_bar", "same-request-key");
+
+    expect(fetch).toHaveBeenCalledTimes(2);
+    const requests = vi.mocked(fetch).mock.calls;
+    expect(requests[0][0]).toContain("/v1/screenings:generate");
+    expect(new Headers(requests[0][1]?.headers).get("Idempotency-Key")).toBe("same-request-key");
+    expect(new Headers(requests[1][1]?.headers).get("Idempotency-Key")).toBe("same-request-key");
+  });
+});
+
+describe("SKU assistant", () => {
+  afterEach(() => {
+    session.clear();
+    vi.unstubAllGlobals();
+  });
+
+  it("submits the question in the context of the selected product", async () => {
+    session.set("maya-token");
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({ answer: "Evidence is incomplete.", trace: [], steps: 1 }), { status: 200 })));
+
+    await api.ask("What evidence is incomplete?", "prd_trail_bar");
+
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/v1/agent:ask"), expect.objectContaining({
+      method: "POST",
+      body: JSON.stringify({ question: "What evidence is incomplete?", product_id: "prd_trail_bar" }),
+    }));
   });
 });
 

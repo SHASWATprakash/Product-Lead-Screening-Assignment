@@ -1,4 +1,4 @@
-import type { Bundle, ExtractResult, Facility, Ingredient, Me, Permission, Product, Run, Usage, User } from "./types";
+import type { AgentResult, Bundle, ExtractResult, Facility, Ingredient, Me, Permission, Product, Run, Usage, User } from "./types";
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
@@ -42,6 +42,7 @@ export const api = {
   patch: (target: "product" | "facility" | "ingredient", id: string, fields: Record<string, { value: unknown; source: string; tier?: string }>) => request<EntityResponse>(`/v1/${target === "facility" ? "facilities" : `${target}s`}/${id}`, { method: "PATCH", body: JSON.stringify({ fields }) }),
   notes: () => request<Record<string, string>>("/v1/meta/sample-notes", {}, false),
   extract: (notes: string, product_id: string, apply: boolean) => request<ExtractResult>("/v1/extract", { method: "POST", body: JSON.stringify({ notes, product_id, apply }) }),
+  ask: (question: string, product_id: string) => request<AgentResult>("/v1/agent:ask", { method: "POST", body: JSON.stringify({ question, product_id }) }),
 };
 type EntityResponse = Product | Facility | Ingredient;
 export const isWriter = (me: Me | undefined, permission: Permission) => Boolean(me?.permissions.includes(permission));
