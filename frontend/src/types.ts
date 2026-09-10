@@ -1,0 +1,16 @@
+export type Tier = "A" | "B" | "C";
+export type Permission = "profiles:read" | "profiles:write" | "screenings:run" | "extract:run" | "agent:ask" | "export:read";
+export type ProvenancedValue = { value: unknown; tier: Tier | null; source: string | null; retrieved_at: string | null; gap: boolean; defaulted: boolean; previous_tier?: Tier | null; previous_source?: string | null };
+export type Entity = { id: string; name: string; fields: Record<string, ProvenancedValue>; [key: string]: unknown };
+export type Product = Entity & { sku: string; facility_id: string; brand_owner: string; status: string; recipe: { ingredient_id: string; weight_g: number }[] };
+export type Facility = Entity & { city: string; country: string };
+export type Ingredient = Entity & { supplier_name?: string };
+export type Bundle = { product: Product; facility: Facility; ingredients: Ingredient[] };
+export type User = { id: string; email: string; name: string; title: string; role: string; tenant_id: string };
+export type Me = { user: User; tenant: { id: string; name: string; plan: string; home_region: string }; permissions: Permission[] };
+export type Usage = { inference_budget: number; inference_used: number; inference_remaining: number; events: { at: string; event: string; cost: number; ref?: string }[] };
+export type Run = { run_id: string; product_id: string; status: "queued" | "running" | "completed" | "failed"; created_at: string; result: ScreeningResult | null; error: string | null };
+export type MatrixRow = { allergen: string; status: "present" | "possible_cross_contact" | "not_detected" | "unknown"; tier: Tier | null; why: string; lineage: Record<string, unknown>[] };
+export type ScreeningResult = { grade: "screening-ready" | "indicative"; grade_rule: string; weight_coverage: { total_g: number; tier_a_g: number; tier_a_pct: number; threshold: number }; allergen_matrix: MatrixRow[]; gaps: { entity_type: string; entity_id: string; entity_name: string; field: string; why: string; blocking: boolean; weight_pct: number | null }[]; process_aids: { name: string; ingredient_name: string; tier: Tier; source: string | null; defaulted: boolean }[]; components: { ingredient_id: string; ingredient_name: string; supplier_name?: string; weight_g: number; weight_pct: number; tier_a_covered: boolean }[]; versions: Record<string, string>; determinism_hash: string; computed_at: string };
+export type ExtractProposal = { target: "ingredient" | "facility" | "product"; id: string | null; matched_id: string | null; matched_name: string | null; fields: Record<string, { value: unknown; source?: string }>; confidence: string; needs_human_confirm: boolean };
+export type ExtractResult = { status: string; summary?: string; warnings?: string[]; unresolved?: string[]; proposals: ExtractProposal[]; note?: string; error?: string; raw?: string };

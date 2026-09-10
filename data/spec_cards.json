@@ -1,0 +1,62 @@
+[
+  {
+    "id": "card_tree_nut_granola",
+    "title": "Tree-nut granola on a dedicated line",
+    "tags": ["tree_nut", "granola", "dedicated_line"],
+    "body": "When tree nuts are a declared ingredient and the line is dedicated (no peanut zoning overlap), declare tree_nut as present. Do not infer peanut presence from tree nuts. Cross-contact peanut requires a separate facility shared-line signal or a validated changeover gap."
+  },
+  {
+    "id": "card_shared_peanut_line",
+    "title": "Shared peanut line without validated changeover",
+    "tags": ["peanut", "shared_line", "changeover"],
+    "body": "A facility with peanut on a shared line and no validated changeover SOP on file must carry peanut as possible_cross_contact at Tier C (defaulted). A controlled SOP id on the facility upgrades this to a documented control; peanut may still appear as precautionary depending on swab evidence, but it is no longer an unmitigated default."
+  },
+  {
+    "id": "card_wheat_oats",
+    "title": "Oats milled on a shared wheat mill",
+    "tags": ["wheat", "oats", "cross_contact"],
+    "body": "Rolled oats are not wheat, but mills that also handle wheat commonly declare wheat cross-contact. Carry wheat as possible_cross_contact at the ingredient's stated tier. Do not upgrade oats to a wheat declaration."
+  },
+  {
+    "id": "card_sulfites_raisins",
+    "title": "Sulfites in dried fruit",
+    "tags": ["sulfites", "raisins", "process_aid"],
+    "body": "Sulfites used to preserve raisins are a process aid, not a Big-9 allergen. Surface them on the pack as a process-aid notice. They do not count toward allergen-matrix presence for milk/egg/fish/shellfish/tree_nut/peanut/wheat/soy/sesame."
+  },
+  {
+    "id": "card_soy_lecithin",
+    "title": "Soy lecithin as a minor additive",
+    "tags": ["soy", "lecithin"],
+    "body": "Soy lecithin is soy. Declare soy as present at the ingredient tier even at low recipe weight. Weight still counts toward the 80% Tier-A coverage rule."
+  },
+  {
+    "id": "card_cocoa_milk_default",
+    "title": "Cocoa powder sector default — milk cross-contact",
+    "tags": ["cocoa", "milk", "tier_c"],
+    "body": "Absent a primary spec, cocoa powder defaults to possible milk cross-contact (shared confectionery lines). This is Tier C and defaulted. A dated supplier spec that explicitly states dedicated cocoa processing removes the default."
+  },
+  {
+    "id": "card_honey_no_default",
+    "title": "Honey has no safe sector default",
+    "tags": ["honey", "gap"],
+    "body": "Honey has no reliable sector default for allergen or process-aid claims. Missing honey specs are gaps, not Tier-C fills. Do not invent a 'none' declaration."
+  },
+  {
+    "id": "card_oil_switch",
+    "title": "Recent oil supplier switch",
+    "tags": ["oil", "sunflower", "gap"],
+    "body": "A recent supplier switch with no spec sheet on file is a gap. Do not copy the previous oil supplier's allergen statement onto the new supplier."
+  },
+  {
+    "id": "card_kids_pouch",
+    "title": "Kids pouch — higher disclosure bar",
+    "tags": ["kids", "pouch", "label"],
+    "body": "Products intended for young children should not ship a screening pack while intended_market or label_claims are gapped. Flag these as blocking gaps even if recipe-weight coverage would otherwise pass."
+  },
+  {
+    "id": "card_sesame_eu",
+    "title": "Sesame is a regulated allergen in EU and US",
+    "tags": ["sesame", "eu"],
+    "body": "Sesame must appear on the allergen matrix whenever it is a declared ingredient. Harbor Pack's tahini SKU is sesame-present at Tier A when a spec sheet exists."
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "usr_maya",
+    "email": "maya@northwind.example",
+    "name": "Maya Chen",
+    "title": "Operations Lead",
+    "tenant_id": "tnt_northwind",
+    "role": "ops_lead"
+  },
+  {
+    "id": "usr_julian",
+    "email": "julian@northwind.example",
+    "name": "Julian Okonkwo",
+    "title": "QA Specialist",
+    "tenant_id": "tnt_northwind",
+    "role": "qa"
+  },
+  {
+    "id": "usr_priya",
+    "email": "priya@northwind.example",
+    "name": "Priya Shah",
+    "title": "Brand Coordinator",
+    "tenant_id": "tnt_northwind",
+    "role": "viewer"
+  },
+  {
+    "id": "usr_ina",
+    "email": "ina@harbor.example",
+    "name": "Ina Berg",
+    "title": "Plant Manager",
+    "tenant_id": "tnt_harbor",
+    "role": "ops_lead"
+  }
+]

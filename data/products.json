@@ -1,0 +1,131 @@
+[
+  {
+    "id": "prd_granola",
+    "tenant_id": "tnt_northwind",
+    "facility_id": "fac_vermont",
+    "sku": "NW-GRA-400",
+    "name": "Maple Pecan Granola 400g",
+    "brand_owner": "Trailhead Foods",
+    "status": "active",
+    "recipe": [
+      {"ingredient_id": "ing_oats", "weight_g": 280},
+      {"ingredient_id": "ing_pecans", "weight_g": 60},
+      {"ingredient_id": "ing_maple", "weight_g": 40},
+      {"ingredient_id": "ing_sunflower_oil", "weight_g": 20}
+    ],
+    "fields": {
+      "label_claims": {
+        "value": ["contains_tree_nuts"],
+        "tier": "A",
+        "source": "draft label v4",
+        "retrieved_at": "2026-06-01",
+        "gap": false,
+        "defaulted": false
+      },
+      "intended_market": {
+        "value": "US",
+        "tier": "A",
+        "source": "brand owner brief",
+        "retrieved_at": "2026-05-20",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "prd_trail_bar",
+    "tenant_id": "tnt_northwind",
+    "facility_id": "fac_boston",
+    "sku": "NW-TRB-50",
+    "name": "Cocoa Trail Bar 50g",
+    "brand_owner": "Trailhead Foods",
+    "status": "pre_production",
+    "recipe": [
+      {"ingredient_id": "ing_oats", "weight_g": 140},
+      {"ingredient_id": "ing_honey", "weight_g": 20},
+      {"ingredient_id": "ing_sunflower_oil", "weight_g": 20},
+      {"ingredient_id": "ing_raisins", "weight_g": 20}
+    ],
+    "fields": {
+      "label_claims": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "intended_market": {
+        "value": "US",
+        "tier": "B",
+        "source": "email from brand coordinator",
+        "retrieved_at": "2026-06-12",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "prd_kids_pouch",
+    "tenant_id": "tnt_northwind",
+    "facility_id": "fac_boston",
+    "sku": "NW-KID-90",
+    "name": "Kids Apple Oat Pouch 90g",
+    "brand_owner": "Little Spoon Co.",
+    "status": "onboarding",
+    "recipe": [
+      {"ingredient_id": "ing_apple_puree", "weight_g": 55},
+      {"ingredient_id": "ing_oats", "weight_g": 25},
+      {"ingredient_id": "ing_cocoa", "weight_g": 5},
+      {"ingredient_id": "ing_sunflower_oil", "weight_g": 5}
+    ],
+    "fields": {
+      "label_claims": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "intended_market": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "prd_tahini_cups",
+    "tenant_id": "tnt_harbor",
+    "facility_id": "fac_rotterdam",
+    "sku": "HB-TAH-24",
+    "name": "Sesame Tahini Cups 24g",
+    "brand_owner": "Noord Brand",
+    "status": "active",
+    "recipe": [
+      {"ingredient_id": "ing_tahini", "weight_g": 24}
+    ],
+    "fields": {
+      "label_claims": {
+        "value": ["contains_sesame"],
+        "tier": "A",
+        "source": "EU label art",
+        "retrieved_at": "2026-05-10",
+        "gap": false,
+        "defaulted": false
+      },
+      "intended_market": {
+        "value": "EU",
+        "tier": "A",
+        "source": "brand owner brief",
+        "retrieved_at": "2026-05-10",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  }
+]

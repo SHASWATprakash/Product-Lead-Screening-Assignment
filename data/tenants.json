@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tnt_northwind",
+    "slug": "northwind",
+    "name": "Northwind Co-Packing",
+    "plan": "pilot",
+    "inference_budget": 40,
+    "inference_used": 6,
+    "home_region": "us-east"
+  },
+  {
+    "id": "tnt_harbor",
+    "slug": "harbor",
+    "name": "Harbor Pack Co.",
+    "plan": "pilot",
+    "inference_budget": 20,
+    "inference_used": 2,
+    "home_region": "eu-west"
+  }
+]

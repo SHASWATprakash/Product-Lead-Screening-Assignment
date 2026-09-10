@@ -1,0 +1,402 @@
+[
+  {
+    "id": "ing_oats",
+    "tenant_id": "tnt_northwind",
+    "name": "Rolled oats",
+    "supplier_name": "Prairie Mills",
+    "fields": {
+      "declared_allergens": {
+        "value": [],
+        "tier": "A",
+        "source": "Prairie Mills spec sheet 2026-03-04",
+        "retrieved_at": "2026-03-08",
+        "gap": false,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": ["wheat"],
+        "tier": "A",
+        "source": "Prairie Mills spec sheet 2026-03-04 (shared mill note)",
+        "retrieved_at": "2026-03-08",
+        "gap": false,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": [],
+        "tier": "A",
+        "source": "Prairie Mills spec sheet 2026-03-04",
+        "retrieved_at": "2026-03-08",
+        "gap": false,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": "2026-03-04",
+        "tier": "A",
+        "source": "Prairie Mills spec sheet 2026-03-04",
+        "retrieved_at": "2026-03-08",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_pecans",
+    "tenant_id": "tnt_northwind",
+    "name": "Pecan pieces",
+    "supplier_name": "Georgia Nut Co.",
+    "fields": {
+      "declared_allergens": {
+        "value": ["tree_nut"],
+        "tier": "A",
+        "source": "Georgia Nut Co. spec sheet 2026-03-18",
+        "retrieved_at": "2026-03-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": [],
+        "tier": "A",
+        "source": "Georgia Nut Co. spec sheet 2026-03-18 (dedicated tree-nut line; no peanut)",
+        "retrieved_at": "2026-03-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": [],
+        "tier": "A",
+        "source": "Georgia Nut Co. spec sheet 2026-03-18",
+        "retrieved_at": "2026-03-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": "2026-03-18",
+        "tier": "A",
+        "source": "Georgia Nut Co. spec sheet 2026-03-18",
+        "retrieved_at": "2026-03-20",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_maple",
+    "tenant_id": "tnt_northwind",
+    "name": "Maple syrup",
+    "supplier_name": "Vermont Sugarhouse",
+    "fields": {
+      "declared_allergens": {
+        "value": [],
+        "tier": "B",
+        "source": "vermontsugarhouse.example/allergens (website, not a spec sheet)",
+        "retrieved_at": "2026-04-11",
+        "gap": false,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": [],
+        "tier": "B",
+        "source": "vermontsugarhouse.example/allergens",
+        "retrieved_at": "2026-04-11",
+        "gap": false,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_sunflower_oil",
+    "tenant_id": "tnt_northwind",
+    "name": "Sunflower oil",
+    "supplier_name": "High Plains Crushers",
+    "fields": {
+      "declared_allergens": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_raisins",
+    "tenant_id": "tnt_northwind",
+    "name": "Thompson raisins",
+    "supplier_name": "Sun Valley Fruit",
+    "fields": {
+      "declared_allergens": {
+        "value": [],
+        "tier": "B",
+        "source": "Sun Valley product page (sulfites declared as additive, not major allergen)",
+        "retrieved_at": "2026-01-22",
+        "gap": false,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": [],
+        "tier": "B",
+        "source": "Sun Valley product page",
+        "retrieved_at": "2026-01-22",
+        "gap": false,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": ["sulfites"],
+        "tier": "B",
+        "source": "Sun Valley product page",
+        "retrieved_at": "2026-01-22",
+        "gap": false,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_soy_lecithin",
+    "tenant_id": "tnt_northwind",
+    "name": "Soy lecithin",
+    "supplier_name": "Midwest Lecithin",
+    "fields": {
+      "declared_allergens": {
+        "value": ["soy"],
+        "tier": "A",
+        "source": "Midwest Lecithin spec sheet 2026-02-02",
+        "retrieved_at": "2026-02-09",
+        "gap": false,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": [],
+        "tier": "A",
+        "source": "Midwest Lecithin spec sheet 2026-02-02",
+        "retrieved_at": "2026-02-09",
+        "gap": false,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": [],
+        "tier": "A",
+        "source": "Midwest Lecithin spec sheet 2026-02-02",
+        "retrieved_at": "2026-02-09",
+        "gap": false,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": "2026-02-02",
+        "tier": "A",
+        "source": "Midwest Lecithin spec sheet 2026-02-02",
+        "retrieved_at": "2026-02-09",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_honey",
+    "tenant_id": "tnt_northwind",
+    "name": "Wildflower honey",
+    "supplier_name": "unknown — recent switch",
+    "fields": {
+      "declared_allergens": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_cocoa",
+    "tenant_id": "tnt_northwind",
+    "name": "Cocoa powder",
+    "supplier_name": "sector default (no primary spec)",
+    "fields": {
+      "declared_allergens": {
+        "value": [],
+        "tier": "C",
+        "source": "sector-default cocoa powder card (dry-blend)",
+        "retrieved_at": "2026-01-01",
+        "gap": false,
+        "defaulted": true
+      },
+      "cross_contact_allergens": {
+        "value": ["milk"],
+        "tier": "C",
+        "source": "sector-default cocoa powder card (shared confectionery lines common)",
+        "retrieved_at": "2026-01-01",
+        "gap": false,
+        "defaulted": true
+      },
+      "process_aids": {
+        "value": [],
+        "tier": "C",
+        "source": "sector-default cocoa powder card",
+        "retrieved_at": "2026-01-01",
+        "gap": false,
+        "defaulted": true
+      },
+      "spec_sheet_date": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_apple_puree",
+    "tenant_id": "tnt_northwind",
+    "name": "Apple puree",
+    "supplier_name": "Orchard Co-op",
+    "fields": {
+      "declared_allergens": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": ["ascorbic_acid"],
+        "tier": "B",
+        "source": "Orchard Co-op website ingredients list",
+        "retrieved_at": "2025-12-14",
+        "gap": false,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "ing_tahini",
+    "tenant_id": "tnt_harbor",
+    "name": "Tahini paste",
+    "supplier_name": "Levant Seeds",
+    "fields": {
+      "declared_allergens": {
+        "value": ["sesame"],
+        "tier": "A",
+        "source": "Levant Seeds spec 2026-05-01",
+        "retrieved_at": "2026-05-04",
+        "gap": false,
+        "defaulted": false
+      },
+      "cross_contact_allergens": {
+        "value": ["tree_nut"],
+        "tier": "A",
+        "source": "Levant Seeds spec 2026-05-01 (tree-nut shared mill note)",
+        "retrieved_at": "2026-05-04",
+        "gap": false,
+        "defaulted": false
+      },
+      "process_aids": {
+        "value": [],
+        "tier": "A",
+        "source": "Levant Seeds spec 2026-05-01",
+        "retrieved_at": "2026-05-04",
+        "gap": false,
+        "defaulted": false
+      },
+      "spec_sheet_date": {
+        "value": "2026-05-01",
+        "tier": "A",
+        "source": "Levant Seeds spec 2026-05-01",
+        "retrieved_at": "2026-05-04",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  }
+]

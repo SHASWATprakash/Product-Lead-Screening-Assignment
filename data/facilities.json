@@ -1,0 +1,173 @@
+[
+  {
+    "id": "fac_boston",
+    "tenant_id": "tnt_northwind",
+    "name": "Boston Ready-Meal & Dry Mix Line",
+    "city": "Boston",
+    "country": "US",
+    "fields": {
+      "gmp_certified": {
+        "value": true,
+        "tier": "A",
+        "source": "SQF certificate #4412",
+        "retrieved_at": "2026-03-12",
+        "gap": false,
+        "defaulted": false
+      },
+      "sqf_level": {
+        "value": "Level 2",
+        "tier": "A",
+        "source": "SQF certificate #4412",
+        "retrieved_at": "2026-03-12",
+        "gap": false,
+        "defaulted": false
+      },
+      "shared_line_allergens": {
+        "value": ["peanut"],
+        "tier": "B",
+        "source": "Massachusetts inspection summary 2025-11",
+        "retrieved_at": "2025-11-02",
+        "gap": false,
+        "defaulted": false
+      },
+      "validated_changeover_sop_id": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "allergen_control_plan_id": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "last_environmental_swab_date": {
+        "value": "2026-01-18",
+        "tier": "B",
+        "source": "internal QA log excerpt (unverified scan)",
+        "retrieved_at": "2026-02-01",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "fac_vermont",
+    "tenant_id": "tnt_northwind",
+    "name": "Vermont Dedicated Granola Line",
+    "city": "White River Junction",
+    "country": "US",
+    "fields": {
+      "gmp_certified": {
+        "value": true,
+        "tier": "A",
+        "source": "SQF certificate #4412 (site addendum)",
+        "retrieved_at": "2026-03-12",
+        "gap": false,
+        "defaulted": false
+      },
+      "sqf_level": {
+        "value": "Level 2",
+        "tier": "A",
+        "source": "SQF certificate #4412 (site addendum)",
+        "retrieved_at": "2026-03-12",
+        "gap": false,
+        "defaulted": false
+      },
+      "shared_line_allergens": {
+        "value": [],
+        "tier": "A",
+        "source": "site allergen zoning map v3",
+        "retrieved_at": "2026-04-02",
+        "gap": false,
+        "defaulted": false
+      },
+      "validated_changeover_sop_id": {
+        "value": "SOP-VT-ALRG-07",
+        "tier": "A",
+        "source": "QMS controlled document",
+        "retrieved_at": "2026-04-02",
+        "gap": false,
+        "defaulted": false
+      },
+      "allergen_control_plan_id": {
+        "value": "ACP-VT-2026",
+        "tier": "A",
+        "source": "QMS controlled document",
+        "retrieved_at": "2026-04-02",
+        "gap": false,
+        "defaulted": false
+      },
+      "last_environmental_swab_date": {
+        "value": "2026-05-11",
+        "tier": "A",
+        "source": "third-party lab report #VT-8841",
+        "retrieved_at": "2026-05-14",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  },
+  {
+    "id": "fac_rotterdam",
+    "tenant_id": "tnt_harbor",
+    "name": "Rotterdam Sesame & Seed Line",
+    "city": "Rotterdam",
+    "country": "NL",
+    "fields": {
+      "gmp_certified": {
+        "value": true,
+        "tier": "A",
+        "source": "IFS Food v8",
+        "retrieved_at": "2026-02-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "sqf_level": {
+        "value": null,
+        "tier": null,
+        "source": null,
+        "retrieved_at": null,
+        "gap": true,
+        "defaulted": false
+      },
+      "shared_line_allergens": {
+        "value": ["sesame"],
+        "tier": "A",
+        "source": "IFS audit non-conformity close-out",
+        "retrieved_at": "2026-02-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "validated_changeover_sop_id": {
+        "value": "SOP-RTD-SSM-02",
+        "tier": "A",
+        "source": "IFS audit pack",
+        "retrieved_at": "2026-02-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "allergen_control_plan_id": {
+        "value": "ACP-RTD-2026",
+        "tier": "A",
+        "source": "IFS audit pack",
+        "retrieved_at": "2026-02-20",
+        "gap": false,
+        "defaulted": false
+      },
+      "last_environmental_swab_date": {
+        "value": "2026-06-01",
+        "tier": "A",
+        "source": "Eurofins report",
+        "retrieved_at": "2026-06-03",
+        "gap": false,
+        "defaulted": false
+      }
+    }
+  }
+]
