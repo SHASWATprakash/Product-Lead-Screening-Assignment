@@ -2,60 +2,80 @@
 
 ## Q1 — First fortnight
 
-Build the authenticated app shell, navigation, static profile-review layout, and API adapter against a versioned draft by mid-week. Use representative API fixtures rather than waiting for ingest completeness. By Friday, freeze auth token/me, tenant-scoped list and profile bundle shapes, PATCH fields, screening run lifecycle, grade labels, and error payloads. The designer can review a working shell in week three; the analyst owns coverage exceptions; AI/ML owns the frozen contract. The founder checkpoint gets staging navigation and a profile-review wizard, not a simulated screening claim.
+> Sequence the fortnight. What do you personally build vs. mock vs. wait for? What needs to be frozen by Friday of week 1, and what can stay draft?
 
-**[ADD YOUR EXPERIENCE: a deadline where you staged a usable shell around an unfinished platform dependency.]**
+**Answer:** I build the authenticated shell, navigation, and profile-review workflow against versioned fixtures rather than wait for ingest to be complete. On enterprise mobile projects with evolving backend services, I have used TypeScript interfaces and realistic API responses so frontend work, UX review, and testing continue independently. Once the contract stabilises, the adapter replaces those fixtures without a component rewrite.
 
-## Q2 — Auth before IdP selection
+By Friday of week one, I need auth token and `/me`, tenant-scoped list and product-bundle shapes, PATCH payloads, screening lifecycle, labelled-grade semantics, and error payloads frozen. Visual polish, non-blocking ingest fields, and the designer's refinements stay draft. The founder checkpoint gets a staging shell and profile-review wizard, not a simulated screening claim.
 
-Place authentication behind a small client session interface: exchange credentials, store a token, fetch the current principal, and attach bearer headers. Use the mock passwordless endpoint for tenant/isolation testing, while the cloud architect spends their limited time deciding identity boundaries, redirect URLs, environments, secrets, and OIDC claims. Replace only the token-acquisition adapter after the ADR; retain session, authorization, and tenant tests.
+## Q2 — Auth when the IdP is not chosen
 
-**[ADD YOUR EXPERIENCE: an auth or identity migration where an abstraction avoided client rewrites.]**
+> How do you sequence WS-auth vs. the app shell so you do not paint yourself into a corner or burn the architect's hours on a prototype login?
 
-## Q3 — Incomplete ingest
+**Answer:** Authentication sits behind a session service that owns token acquisition, storage, `/me`, logout, bearer-header injection, and expiry handling. I have used this separation where authentication and backend integration requirements changed during delivery. Components depend on current permissions and tenant context, not the identity provider.
 
-Agree on a field-level contract: every field is a value with tier, source, retrieval date, gap and defaulted status. The analyst reports source exceptions and coverage by tenant; AI/ML preserves gaps as gaps; the app makes missing evidence actionable. On day one, the wizard starts from existing evidence and asks for source-backed completion. Do not turn missing values into empty strings, infer safety, or manufacture a progress score that hides uncertainty.
+The mock passwordless endpoint supports isolation and wizard testing now. The cloud architect's limited time stays focused on environments, secrets, redirect URLs, OIDC claims, and the ADR. When the IdP is selected, token acquisition changes inside the adapter; authorization UI, API interceptors, route guards, and tenant-isolation tests remain intact.
 
-**[ADD YOUR EXPERIENCE: a data-quality issue where visible uncertainty changed the product decision.]**
+## Q3 — Pre-populate vs. ingest reality
+
+> What is the handshake between you, the analyst, and AI/ML for incomplete ingest? What does the wizard do on day one, and what do you refuse to fake in the client?
+
+**Answer:** Uncertainty belongs in the domain model, not as an implementation detail. In healthcare-oriented work, I have treated source, validation state, and data availability as meaningful because incomplete clinical information changes what the UI can safely communicate.
+
+The analyst reports source exceptions and coverage by tenant. AI/ML preserves absent evidence as a gap. The app starts with available evidence and directs the user to source-backed completion. I do not convert missing values into empty strings, imply safety, or introduce a progress metric that hides uncertainty.
 
 ## Q4 — Unlabelled number
 
-Decline to calculate a client-side risk score for the demo. Show the server-provided labelled grade, coverage and gap breakdown instead, with a short explanation of how they work. After the demo, record the request as a product/clinical-policy decision and require CTO, AI/ML, domain/compliance ownership, and an evaluation plan before a new score enters the API contract.
+> What do you do between now and tomorrow, and what do you do after? Who has to agree before any score ships?
 
-**[ADD YOUR EXPERIENCE: resisting a misleading metric or risk score under presentation pressure.]**
+**Answer:** I do not calculate a client-side risk score for a demo. In AI and healthcare-oriented systems, I have preferred validated backend output, evidence, and confidence or coverage information over invented presentation-layer metrics. A number looks authoritative even when its method is undefined.
 
-## Q5 — Breaking contract change
+For the demo, the dashboard shows the labelled grade, Tier-A coverage, gaps, and the reason behind each matrix row. A future score requires agreement from the CTO, AI/ML, the domain or compliance owner, plus an explicit calculation, evaluation criteria, and API-level semantics.
 
-Treat the staging failure as an incident: pin the app to the last compatible API version or immediately restore the additive field, assess beta impact, and update the designer’s terminology only after the API meaning is resolved. Establish contract ownership: versioned OpenAPI, additive-only changes during a sprint, CI compatibility checks, written deprecation windows, and a named approver for breaking changes.
+## Q5 — Contract change mid-sprint
 
-**[ADD YOUR EXPERIENCE: a breaking dependency change and the control you introduced afterward.]**
+> How do you handle the incident this afternoon, and what process do you put on the seam so this is not the culture?
 
-## Q6 — 429 during walkthrough
+**Answer:** A staging break from a rename is an incident. The immediate response is to restore compatibility or pin the client to the last supported contract, not spread a workaround through the UI. I have worked with REST and GraphQL integrations where backend changes affected multiple clients; transport models behind adapters keep that blast radius contained.
 
-On the call, explain that the inference budget is a deliberate control, keep the labelled pack separate from LLM features, and continue with the existing completed screening rather than retrying. This week, show remaining units and operation costs before submission, preserve the API detail on 429, and add a non-destructive path back to completed evidence. Agree with AI/ML on tenant quotas, reservation policy, and observability; product owns clear human messaging.
+The seam needs a versioned OpenAPI contract, additive-only changes during a sprint, compatibility checks in CI, deprecation windows, and a named approver for breaking changes. Designer terminology changes only after the API meaning is agreed.
 
-**[ADD YOUR EXPERIENCE: a cost, quota, or rate-limit constraint you designed around.]**
+## Q6 — 429 in a live walkthrough
 
-## Q7 — Isolation bug
+> What do you do on the call, what do you change in the product this week, and how do you work with AI/ML on budget policy versus UX?
 
-Freeze beta promotion and all tenancy-related changes. Split investigation: platform checks tenant scoping and claims; app checks token replacement, cache invalidation, and tenant-qualified client storage; QA captures reproducible requests, responses, storage state, and timestamps. Release only after automated same-browser Maya/Ina tests and backend evidence prove the root cause. Tell the beta cohort the isolation gate is non-negotiable, explain the revised date, and avoid exposing any affected data details.
+**Answer:** On the call, I explain that inference capacity is controlled separately from deterministic screening and continue with the completed labelled pack. I have designed around rate limits and expensive backend or AI operations using throttling, caching, queues, and controlled retries. Repeated retries are the wrong response to a quota signal.
 
-**[ADD YOUR EXPERIENCE: an authorization or data-isolation incident and how you coordinated its containment.]**
+The product shows remaining units and operation cost before submission, preserves the API's 429 detail, and offers a non-destructive route back to completed results. AI/ML and product agree tenant quotas, reservation policy, and usage telemetry. Exponential backoff can suit transient failures; a 429 requires a clear budget policy and explicit user action.
+
+## Q7 — Isolation bug, seven days before beta
+
+> What do you freeze, who investigates what, what evidence do you need before calling it app versus platform, and what do you tell the beta cohort if the window slips?
+
+**Answer:** Cross-tenant exposure is a release blocker. In multi-tenant healthcare architecture work, I have focused on enforcing tenant context at authorization and data-access boundaries instead of relying on frontend filtering.
+
+Promotion and tenancy-related changes freeze. Platform checks RLS, tenant claims, and API responses; the app team checks token replacement, cache keys, and client storage; QA captures the account sequence, requests, responses, storage state, and timestamps. Release resumes only after automated same-browser Maya/Ina tests and backend evidence demonstrate isolation and the root cause is understood. If beta slips, I state that the release is held at the tenant-isolation gate and share the revised date without exposing affected data.
 
 ## Q8 — Fractional designer
 
-Use the designer’s two days for workflow observation, information hierarchy, edge-state critique, and acceptance review of a maintained component inventory. Continue implementing known flows between sessions. The frontend owns coded components and tokens; the design file expresses intent and review decisions, not a competing source of runtime truth. Prioritize unaided activation tests over cosmetic revision.
+> How do you use the designer's two days, what do you not wait on, and how do you avoid two sources of truth for components?
 
-**[ADD YOUR EXPERIENCE: working effectively with a fractional design partner.]**
+**Answer:** I use limited design time for workflow validation, information hierarchy, accessibility, edge states, and acceptance review. I have worked in delivery environments where engineering continued while specialist availability was constrained. Between sessions, implementation moves forward through reusable components and established design tokens.
+
+The design file captures intent and decisions. The coded component system remains the runtime source of truth. I do not wait for a designer to start API integration, authentication, or known error states. The measure is an operations lead completing the flow unaided, not a backlog of visual polish.
 
 ## Q9 — One gate, three workstreams
 
-Split the overloaded gate. First prove five unaided users can produce a labelled, printable pack from an existing tenant; print CSS is sufficient evidence for the export path. Keep Stripe provisioning and email delivery explicitly out until tenant creation and delivery ownership are designed and staffed. Report the cut with evidence: completion recordings, support observations, screening logs, and labelled-pack review rather than a single aspirational launch metric.
+> Cut or sequence. What is in, what is explicitly out, what evidence goes on the gate, and how do you say no?
 
-**[ADD YOUR EXPERIENCE: reducing an over-combined launch gate to protect a critical outcome.]**
+**Answer:** I split this into separate gates. On large enterprise applications, I have found that combining unrelated dependencies into one release gate increases risk without proving the core experience. The first gate proves that five users can complete the existing-tenant workflow and produce a correct labelled, printable pack. A print stylesheet is sufficient at this stage.
 
-## Q10 — False peanut-free proposal
+Stripe provisioning and email delivery stay out until tenant creation, payment failure handling, delivery ownership, and support are designed and staffed. The decision rests on completion evidence, output validation, logs, and user observation, rather than an all-or-nothing launch metric that hides where the product fails.
 
-Treat agent output as an untrusted proposal channel. Display its warning and provenance, require human source-backed PATCH confirmation, and prohibit it from appearing in the labelled pack or being framed as a facility/product claim. Add an evaluation case for supplier-specific evidence versus facility shared-line evidence, and block release of any agent feature until it passes that case and review by AI/ML, product, and the labelled-output policy owner.
+## Q10 — Agent proposes a false peanut-free claim
 
-**[ADD YOUR EXPERIENCE: a model or automation overclaim and the release control it led to.]**
+> How should the product treat agent output versus engine output? What UX and release rule do you add?
+
+**Answer:** In my AI and RAG work, I treat model output as probabilistic rather than authoritative. A peanut-free claim cannot become labelled truth because an agent generated it. The product retains the proposal and provenance, shows it as unverified, and requires human confirmation against source evidence before a PATCH makes it authoritative.
+
+Agent output stays outside the labelled pack. The supplier-specific versus facility-wide evidence conflict belongs in the evaluation suite. An agent feature does not enter release until it passes that evaluation and review by AI/ML, product, and the labelled-output policy owner. The release rule is simple: model output cannot enter a deterministic or compliance-sensitive report without source-backed confirmation.
