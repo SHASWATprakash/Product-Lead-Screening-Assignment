@@ -63,7 +63,12 @@ def _public_user(user: dict) -> dict:
 
 
 def _llm_http_error(exc: Exception) -> HTTPException:
-    if isinstance(exc, (openai.APIConnectionError, openai.APITimeoutError)):
+    if isinstance(exc, openai.APITimeoutError):
+        return HTTPException(
+            status_code=502,
+            detail="The local model did not respond before the request timeout. Confirm Ollama has available memory and retry after the model is warm.",
+        )
+    if isinstance(exc, openai.APIConnectionError):
         return HTTPException(
             status_code=502,
             detail=(

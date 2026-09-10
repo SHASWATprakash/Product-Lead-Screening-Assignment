@@ -5,15 +5,23 @@ import json
 import re
 from typing import Any
 
-from app import llm_client
+from app import config, llm_client
 from app.store import Store
 
 _JSON_RE = re.compile(r"\{.*\}", re.DOTALL)
+_ALLERGEN_FIELDS = {"declared_allergens", "cross_contact_allergens", "shared_line_allergens"}
+_ALLOWED_FIELDS = {
+    "ingredient": {"declared_allergens", "cross_contact_allergens", "process_aids", "spec_sheet_date", "supplier_name"},
+    "facility": {"validated_changeover_sop_id", "allergen_control_plan_id", "shared_line_allergens"},
+    "product": {"label_claims", "intended_market"},
+}
+_BIG9 = {"milk", "egg", "fish", "shellfish", "tree_nut", "peanut", "wheat", "soy", "sesame"}
+_UNSUPPORTED_EMPTY_ARRAY_SOURCE = re.compile(r"\b(not mentioned|not received|pending|waiting|unknown|no information|no .{0,40} mentioned)\b", re.IGNORECASE)
 
 EXTRACT_SYSTEM = """You extract structured allergen/spec claims from messy operations notes \
 for a food co-manufacturer. You do not invent facts.
 
-Return ONLY a JSON object with this shape:
+Return ONLY a compact JSON object with this shape. Return no more than four patches.
 {
   "summary": "one paragraph of what you understood",
   "patches": [
@@ -31,6 +39,8 @@ Return ONLY a JSON object with this shape:
   "unresolved": ["anything you could not map to a catalogue entity"],
   "warnings": ["liability or overclaim risks, e.g. a requested peanut-free claim"]
 }
+
+Keep the summary under 240 characters and each source under 120 characters. Put confidence and needs_human_confirm beside fields, never inside fields. Omit any claim not directly supported by the notes. Do not fill empty allergen or process-aid arrays when a supplier spec is pending.
 
 Allowed field names:
 - ingredient: declared_allergens, cross_contact_allergens, process_aids, spec_sheet_date, supplier_name
@@ -81,6 +91,29 @@ def _match_entity(store: Store, tenant_id: str, patch: dict, product: dict | Non
     return None
 
 
+def _safe_fields(target: str, fields: Any) -> tuple[dict[str, dict], list[str]]:
+    if not isinstance(fields, dict):
+        return {}, []
+    accepted: dict[str, dict] = {}
+    rejected: list[str] = []
+    for name, spec in fields.items():
+        if name not in _ALLOWED_FIELDS.get(target, set()) or not isinstance(spec, dict) or "value" not in spec:
+            rejected.append(str(name))
+            continue
+        value = spec["value"]
+        source = spec.get("source")
+        if name in _ALLERGEN_FIELDS:
+            if not isinstance(value, list) or any(item not in _BIG9 for item in value):
+                rejected.append(name)
+                continue
+        if name in _ALLERGEN_FIELDS | {"process_aids", "label_claims"} and value == []:
+            if not isinstance(source, str) or _UNSUPPORTED_EMPTY_ARRAY_SOURCE.search(source):
+                rejected.append(name)
+                continue
+        accepted[name] = {"value": value, "source": source}
+    return accepted, rejected
+
+
 def extract_notes(
     store: Store,
     tenant_id: str,
@@ -117,25 +150,37 @@ def extract_notes(
         [
             {"role": "system", "content": EXTRACT_SYSTEM},
             {"role": "user", "content": user},
-        ]
+        ],
+        json_mode=True,
+        max_tokens=config.LLM_EXTRACTION_MAX_TOKENS,
+        timeout=config.LLM_EXTRACTION_TIMEOUT_SECONDS,
     )
     try:
         parsed = _parse_json(raw.get("content") or "")
     except (ValueError, json.JSONDecodeError) as exc:
         return {
             "status": "parse_failed",
-            "error": str(exc),
-            "raw": raw.get("content"),
+            "error": "The model returned reasoning without a final JSON response" if raw.get("thinking") and not raw.get("content") else str(exc),
+            "raw": raw.get("content") or raw.get("thinking"),
             "proposals": [],
             "applied": [],
         }
 
     proposals = []
+    rejected_fields: list[str] = []
     applied = []
     for patch in parsed.get("patches") or []:
+        target = patch.get("target")
+        if target not in _ALLOWED_FIELDS:
+            continue
+        fields, rejected = _safe_fields(target, patch.get("fields"))
+        rejected_fields.extend(rejected)
+        if not fields:
+            continue
         entity = _match_entity(store, tenant_id, patch, product)
         proposal = {
             **patch,
+            "fields": fields,
             "matched_id": entity["id"] if entity else None,
             "matched_name": entity.get("name") if entity else None,
         }
@@ -154,19 +199,19 @@ def extract_notes(
                 )
             if not fields:
                 continue
-            if patch.get("target") == "ingredient":
+            if target == "ingredient":
                 row = store.patch_ingredient(tenant_id, entity["id"], fields)
-            elif patch.get("target") == "facility":
+            elif target == "facility":
                 row = store.patch_facility(tenant_id, entity["id"], fields)
             else:
                 row = store.patch_product(tenant_id, entity["id"], fields)
-            applied.append({"id": entity["id"], "target": patch.get("target"), "fields": list(fields)})
+            applied.append({"id": entity["id"], "target": target, "fields": list(fields)})
             proposal["applied_snapshot"] = row.get("fields")
 
     return {
         "status": "ok",
         "summary": parsed.get("summary"),
-        "warnings": parsed.get("warnings") or [],
+        "warnings": [*(parsed.get("warnings") or []), *( [f"Ignored unsupported extracted fields: {', '.join(sorted(set(rejected_fields)))}."] if rejected_fields else [])],
         "unresolved": parsed.get("unresolved") or [],
         "proposals": proposals,
         "applied": applied,

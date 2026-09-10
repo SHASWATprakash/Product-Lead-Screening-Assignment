@@ -30,6 +30,10 @@ python -m unittest discover -s tests -v
 
 The check sends two generation requests with the same `Idempotency-Key`. It asserts they return the same `run_id`, add one screening meter event, and increase usage by one unit only.
 
+## Local model performance
+
+Extraction and the SKU assistant depend on the local Ollama runtime. Extraction requests a bounded JSON response, keeps the model resident for ten minutes after use, and fails after 120 seconds with an actionable error rather than holding the UI indefinitely. On a machine under memory pressure, wait for the first model load to finish, then use `ollama ps` to confirm `qwen3.5:4b` is resident before retrying. `OLLAMA_MODEL`, `LLM_EXTRACTION_TIMEOUT_SECONDS`, and `LLM_EXTRACTION_MAX_TOKENS` can be set for local performance testing.
+
 ## Reviewer paths
 
 - **Maya** (`maya@northwind.example`): Open Cocoa Trail Bar, generate its first screening, then use the trail hint to complete Wildflower honey `declared_allergens` and `cross_contact_allergens` as empty Tier-A arrays with a dated primary source. Generate again: the result should become `screening-ready` at 80% Tier-A recipe-weight coverage.
